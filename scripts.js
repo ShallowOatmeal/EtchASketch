@@ -14,11 +14,23 @@ resetButton.addEventListener("click", (e) => {
     }
 });
 
+function random(number) {
+    return Math.floor(Math.random() * number + 1);
+}
 
 function randColor() {
-    cell.style.backgroundColor = `rgb(${random(255)},${random(255)},${random(255)}`;
-    }
+    let cell = document.querySelectorAll('.gridCell');
+    for (const cells of cell) {
+        cells.removeEventListener("mouseover", (e) => {
+            cell.style.backgroundColor = "rgb(32, 32, 32)";
+        });
+        cells.addEventListener("mouseover", (e) => {
+            cells.style.backgroundColor = `rgb(${random(255)},${random(255)},${random(255)}`;
         
+            });
+    }
+    }
+
 function newGrid(rows, cols) {
     for (let c = 0; c < (rows * cols); c++) {
         let cell = document.createElement('div');
@@ -46,4 +58,7 @@ numSquares.addEventListener("click", (e) => {
         alert("The number of pixels has to be lower than 100!");
     }
     newGrid(newPixels, newPixels);
+    newPixels;
 });
+
+randomColor.addEventListener("click", () => randColor())
