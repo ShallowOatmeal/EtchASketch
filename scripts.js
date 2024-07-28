@@ -1,7 +1,7 @@
 const container = document.querySelector('#container');
-let PXS = 600;
-let containerHeight = container.style.height;
-let containerWidth = container.style.width;
+const containerProperties = window.getComputedStyle(container);
+const CONTAINER_HEIGHT = containerProperties.getPropertyValue('height');
+const CONTAINER_WIDTH = containerProperties.getPropertyValue('width');
 const resetButton = document.querySelector('#reset');
 const numSquares = document.querySelector('#numSquares');
 const randomColor = document.querySelector('#randomColor');
@@ -14,22 +14,17 @@ resetButton.addEventListener("click", (e) => {
     }
 });
 
-/*         cell.style.width = `${(containerWidth / cols) - 2}px`
-        cell.style.height = `${(containerHeight / rows) - 2}px`
-        */
-
 
 function randColor() {
-    cell.style.backgroundColor = "rgb(32, 32,32)";
-    randomColor.addEventListener(click, (e) => {
-        cell.style.backgroundColor = '';
-    })
-}
+    cell.style.backgroundColor = `rgb(${random(255)},${random(255)},${random(255)}`;
+    }
         
 function newGrid(rows, cols) {
     for (let c = 0; c < (rows * cols); c++) {
         let cell = document.createElement('div');
         cell.classList.add('gridCell');
+        cell.style.width = `calc(${CONTAINER_WIDTH} / ${cols})`;
+        cell.style.height = `calc(${CONTAINER_HEIGHT} / ${rows})`;
         container.appendChild(cell);
         cell.addEventListener("mouseover", (e) => {
             cell.style.backgroundColor = "rgb(32, 32, 32)";
@@ -37,16 +32,18 @@ function newGrid(rows, cols) {
     }
 }
 
-newGrid(16, 16);
+newGrid(16,16);
 
 numSquares.addEventListener("click", (e) => {
     let newPixels = prompt("How many Pixels would you like to draw on?");
-    let pixels = document.querySelectorAll('.gridCell')
-    for (const pixel of pixels) {
-        pixel.remove();
+    if (newPixels <= 100) {
+        let pixels = document.querySelectorAll('.gridCell')
+        for (const pixel of pixels) {
+            pixel.remove();
+        }
+    }
+    else {
+        alert("The number of pixels has to be lower than 100!");
     }
     newGrid(newPixels, newPixels);
-    let newPix = document.querySelector('.gridCell');
-    newPix.style.height = `${(containerHeight / newPixels) - 2}px`;
-    newPix.style.width =  `${(containerWidth / newPixels) - 2}px`;
 });
